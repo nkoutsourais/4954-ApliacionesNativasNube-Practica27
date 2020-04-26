@@ -1,0 +1,13 @@
+version: '3'
+services:
+  monolito:
+      build: ./monolito/
+
+  apigateway:
+    build: ./api-gateway
+    ports:
+      - "8080:8080"
+    environment:
+          - order.destinations.orderServiceUrl=http://monolito:8080/
+          - customer.destinations.customerServiceUrl=http://monolito:8080/
+          - product.destinations.productServiceUrl=http://monolito:8080/
