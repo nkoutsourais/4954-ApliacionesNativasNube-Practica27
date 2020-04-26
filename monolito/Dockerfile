@@ -1,9 +1,3 @@
-FROM maven as builder
-COPY . /code/
-WORKDIR /code
-RUN mvn package
-
-FROM openjdk:8-jre
-COPY --from=builder /code/target/*.jar /usr/app/
-WORKDIR /usr/app
-CMD [ "java", "-jar", "practica27-1.0-SNAPSHOT.jar" ]
+FROM java:openjdk-8u111-alpine
+CMD java ${JAVA_OPTS} -jar practica27-*.jar
+COPY target/practica27-*.jar .

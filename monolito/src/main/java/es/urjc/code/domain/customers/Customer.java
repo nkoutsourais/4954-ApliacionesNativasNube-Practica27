@@ -1,12 +1,8 @@
 package es.urjc.code.domain.customers;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.persistence.*;
 
 import es.urjc.code.domain.Money;
-import es.urjc.code.domain.orders.Order;
 
 @Entity
 @Table(name="Customers")
@@ -18,9 +14,6 @@ public class Customer {
   private String name;
   @Embedded
   private Money creditLimit;
-
-  @OneToMany(mappedBy = "customer")
-  private List<Order> orders = new ArrayList<>();
 
   public Customer() {
   }

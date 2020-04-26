@@ -13,16 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import es.urjc.code.domain.customers.CustomerCreditLimitExceededException;
-import es.urjc.code.domain.customers.CustomerNotFoundException;
-import es.urjc.code.domain.orders.Order;
-import es.urjc.code.domain.orders.OrderNotFoundException;
-import es.urjc.code.domain.products.ProductNotFoundException;
-import es.urjc.code.domain.products.ProductStockLimitExceededException;
-import es.urjc.code.services.OrderService;
-import es.urjc.code.web.dtos.CreateOrderRequestDto;
-import es.urjc.code.web.dtos.CreateOrderResponseDto;
-import es.urjc.code.web.dtos.GetOrderDto;
+import es.urjc.code.domain.orders.*;
+import es.urjc.code.services.*;
+import es.urjc.code.web.dtos.*;
 
 @RestController
 @RequestMapping("/api/orders")
@@ -51,7 +44,7 @@ public class OrderController {
     @PostMapping("/")
     public ResponseEntity<CreateOrderResponseDto> newOrder(@RequestBody CreateOrderRequestDto order) {
         try {
-            Long orderId = this.orderService.createOrder(order.getCustomerId(), order.getProductId(), order.getQuanty());
+            Long orderId = this.orderService.createOrder(order.getCustomerId(), order.getProductId(), order.getQuanty(), order.getOrderTotal());
             return new ResponseEntity<>(new CreateOrderResponseDto(orderId), HttpStatus.CREATED);
         } catch (CustomerNotFoundException ex) {
             return new ResponseEntity<>(new CreateOrderResponseDto("Customer not found"), HttpStatus.NOT_FOUND);

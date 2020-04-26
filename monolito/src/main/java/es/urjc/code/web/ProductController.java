@@ -16,8 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 import es.urjc.code.domain.Money;
 import es.urjc.code.domain.customers.CustomerNotFoundException;
 import es.urjc.code.domain.products.Product;
+import es.urjc.code.domain.products.ProductNotFoundException;
+import es.urjc.code.domain.products.ProductStockLimitExceededException;
 import es.urjc.code.services.ProductService;
 import es.urjc.code.web.dtos.ProductDto;
+import es.urjc.code.web.dtos.ReserveStock;
 
 @RestController
 @RequestMapping("/api/products")
@@ -34,12 +37,12 @@ public class ProductController {
     }
     
     @GetMapping("/{productId}")
-	public ResponseEntity<ProductDto> getPost(@PathVariable Long productId) {
+	public ResponseEntity<ProductDto> getProduct(@PathVariable Long productId) {
         try
         {
             Product product = this.productService.get(productId);
             return new ResponseEntity<>(mapper(product), HttpStatus.OK);
-        } catch(CustomerNotFoundException ex) {
+        } catch(ProductNotFoundException ex) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
@@ -49,6 +52,19 @@ public class ProductController {
         Product product = new Product(productDto.getName(), productDto.getStock(), new Money(productDto.getPrice()));
 		this.productService.add(product);
 		return new ResponseEntity<>(productDto, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/{productId}/reserve")
+	public ResponseEntity<ProductDto> reserveStock(@PathVariable Long productId, @RequestBody ReserveStock reserveStock) {
+        try
+        {
+            this.productService.reserveStock(productId, reserveStock.getQuanty());
+            return getProduct(productId);
+        } catch(ProductNotFoundException ex) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch(ProductStockLimitExceededException ex) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
     }
     
     private ProductDto mapper(Product product) {

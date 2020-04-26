@@ -1,13 +1,10 @@
 package es.urjc.code.domain.products;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.*;
 
 import es.urjc.code.domain.Money;
-import es.urjc.code.domain.orders.Order;
 
 @Entity
 @Table(name = "Products")
@@ -20,8 +17,6 @@ public class Product {
     private int stock;
     @Embedded
     private Money price;
-    @OneToMany(mappedBy = "product")
-    private List<Order> orders = new ArrayList<>();
 
     public Product() {
     }

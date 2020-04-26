@@ -1,18 +1,22 @@
 package es.urjc.code.web.dtos;
 
+import java.math.BigDecimal;
+
 public class CreateOrderRequestDto {
 
   private Long customerId;
   private Long productId;
   private int quanty;
+  private BigDecimal orderTotal;
 
   public CreateOrderRequestDto() {
   }
 
-  public CreateOrderRequestDto(Long customerId, Long productId, int quanty) {
+  public CreateOrderRequestDto(Long customerId, Long productId, int quanty, BigDecimal orderTotal) {
     this.customerId = customerId;
     this.productId = productId;
     this.quanty = quanty;
+    this.orderTotal = orderTotal;
   }
 
   public Long getCustomerId() {
@@ -37,5 +41,13 @@ public class CreateOrderRequestDto {
 
   public void setQuanty(int quanty) {
     this.quanty = quanty;
+  }
+
+  public BigDecimal getOrderTotal() {
+    return orderTotal;
+  }
+
+  public void setOrderTotal(BigDecimal orderTotal) {
+    this.orderTotal = orderTotal;
   }
 }

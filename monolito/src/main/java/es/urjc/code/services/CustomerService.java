@@ -36,4 +36,10 @@ public class CustomerService {
         this.customerRepository.save(customer);
         this.mailService.send(customer, extra);
     }
+
+	public void reserveCredit(Long customerId, Money reserve) {
+        Customer customer = get(customerId);
+        customer.reserveCredit(reserve);
+        this.customerRepository.save(customer);
+	}
 }

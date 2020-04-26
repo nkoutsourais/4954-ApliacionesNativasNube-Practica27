@@ -3,8 +3,6 @@ package es.urjc.code.domain.orders;
 import javax.persistence.*;
 
 import es.urjc.code.domain.Money;
-import es.urjc.code.domain.customers.Customer;
-import es.urjc.code.domain.products.Product;
 
 @Entity
 @Table(name="Orders")
@@ -13,20 +11,19 @@ public class Order {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
-
-  @ManyToOne
-  private Customer customer;
-  @ManyToOne
-  private Product product;
+  private Long customerId;
+  private Long productId;
   private int quanty;
+  private Money orderTotal;
 
   public Order() {
   }
 
-  public Order(Customer customer, Product product, int quanty) {
+  public Order(Long customerId, Long productId, int quanty, Money orderTotal) {
     this.quanty = quanty;
-    this.product = product;
-    this.customer = customer;
+    this.productId = productId;
+    this.customerId = customerId;
+    this.orderTotal = orderTotal;
   }
 
   public Long getId() {
@@ -34,11 +31,11 @@ public class Order {
   }
 
   public Long getProductId() {
-    return this.product.getId();
+    return this.productId;
   }
 
   public Long getCustomerId() {
-    return this.customer.getId();
+    return this.customerId;
   }
 
   public int getQuanty() {
@@ -50,6 +47,6 @@ public class Order {
   }
 
   public Money getOrderTotal() {
-    return product.calculatePrice(quanty);
+    return this.orderTotal;
   }
 }

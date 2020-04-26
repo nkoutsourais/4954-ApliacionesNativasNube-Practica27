@@ -15,10 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import es.urjc.code.domain.Money;
 import es.urjc.code.domain.customers.Customer;
+import es.urjc.code.domain.customers.CustomerCreditLimitExceededException;
 import es.urjc.code.domain.customers.CustomerNotFoundException;
 import es.urjc.code.services.CustomerService;
 import es.urjc.code.web.dtos.CustomerDto;
-import es.urjc.code.web.dtos.IncreaseCreditDto;
+import es.urjc.code.web.dtos.CreditDto;
 
 @RestController
 @RequestMapping("/api/customers")
@@ -54,9 +55,22 @@ public class CustomerController {
     }
 
     @PostMapping("/{customerId}/credit")
-	public ResponseEntity<CustomerDto> increaseCredir(@PathVariable Long customerId, @RequestBody IncreaseCreditDto increaseDto) {
-        this.customerService.increaseCredit(customerId, new Money(increaseDto.getIncreaseCredit()));
+	public ResponseEntity<CustomerDto> increaseCredir(@PathVariable Long customerId, @RequestBody CreditDto increaseDto) {
+        this.customerService.increaseCredit(customerId, new Money(increaseDto.getCredit()));
 		return getCustomer(customerId);
+    }
+
+    @PostMapping("/{customerId}/reserve")
+	public ResponseEntity<CustomerDto> reserveCredit(@PathVariable Long customerId, @RequestBody CreditDto increaseDto) {
+        try
+        {
+            this.customerService.reserveCredit(customerId, new Money(increaseDto.getCredit()));
+            return getCustomer(customerId);
+        } catch(CustomerNotFoundException ex) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch(CustomerCreditLimitExceededException ex) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
     }
     
     private CustomerDto mapper(Customer customer) {
