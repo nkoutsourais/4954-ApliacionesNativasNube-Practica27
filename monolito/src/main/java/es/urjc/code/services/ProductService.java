@@ -1,6 +1,5 @@
 package es.urjc.code.services;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,14 +23,15 @@ public class ProductService {
         return productRepository.findById(productId).orElseThrow(ProductNotFoundException::new);
     }
 
-    public void add(Product product) {
+    public Product add(String name, int stock) {
+        Product product = new Product(name, stock);
         this.productRepository.save(product);
+        return product;
     }
 
-    public BigDecimal reserveStock(Long productId, int quanty) {
+    public void reserveStock(Long productId, int quanty) {
         Product product = get(productId);
         product.reserveStock(quanty);
         this.productRepository.save(product);
-        return product.calculatePrice(quanty).getAmount();
 	}
 }

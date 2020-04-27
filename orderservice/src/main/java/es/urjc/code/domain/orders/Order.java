@@ -14,6 +14,7 @@ public class Order {
   private Long customerId;
   private Long productId;
   private int quanty;
+  @Embedded
   private Money orderTotal;
 
   public Order() {

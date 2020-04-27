@@ -26,8 +26,10 @@ public class CustomerService {
         return customerRepository.findById(customerId).orElseThrow(CustomerNotFoundException::new);
     }
 
-    public void add(Customer customer) {
+    public Customer add(String name, Money creditLimit) {
+        Customer customer = new Customer(name, creditLimit);
         this.customerRepository.save(customer);
+        return customer;
     }
 
     public void increaseCredit(Long customerId, Money extra) {

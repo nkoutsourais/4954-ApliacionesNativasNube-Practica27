@@ -48,8 +48,7 @@ public class CustomerController {
     
     @PostMapping("/")
 	public ResponseEntity<CustomerDto> newCustomer(@RequestBody CustomerDto customerDto) {
-        Customer customer = new Customer(customerDto.getName(), new Money(customerDto.getCredit()));
-        this.customerService.add(customer);
+        Customer customer = this.customerService.add(customerDto.getName(), new Money(customerDto.getCredit()));
         customerDto.setId(customer.getId());
 		return new ResponseEntity<>(customerDto, HttpStatus.CREATED);
     }

@@ -12,13 +12,6 @@ public class CreateOrderRequestDto {
   public CreateOrderRequestDto() {
   }
 
-  public CreateOrderRequestDto(Long customerId, Long productId, int quanty, BigDecimal orderTotal) {
-    this.customerId = customerId;
-    this.productId = productId;
-    this.quanty = quanty;
-    this.orderTotal = orderTotal;
-  }
-
   public Long getCustomerId() {
     return customerId;
   }

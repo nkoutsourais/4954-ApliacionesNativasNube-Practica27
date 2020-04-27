@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import es.urjc.code.domain.Money;
-import es.urjc.code.domain.customers.CustomerNotFoundException;
 import es.urjc.code.domain.products.Product;
 import es.urjc.code.domain.products.ProductNotFoundException;
 import es.urjc.code.domain.products.ProductStockLimitExceededException;
@@ -49,8 +47,8 @@ public class ProductController {
     
     @PostMapping("/")
 	public ResponseEntity<ProductDto> newProduct(@RequestBody ProductDto productDto) {
-        Product product = new Product(productDto.getName(), productDto.getStock(), new Money(productDto.getPrice()));
-		this.productService.add(product);
+        Product product = this.productService.add(productDto.getName(), productDto.getStock());
+        productDto.setId(product.getId());
 		return new ResponseEntity<>(productDto, HttpStatus.CREATED);
     }
 
@@ -68,6 +66,6 @@ public class ProductController {
     }
     
     private ProductDto mapper(Product product) {
-        return new ProductDto(product.getId(), product.getName(), product.getStock(), product.getPrice().getAmount());
+        return new ProductDto(product.getId(), product.getName(), product.getStock());
     }
 }
