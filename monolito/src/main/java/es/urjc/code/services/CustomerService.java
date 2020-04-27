@@ -16,7 +16,7 @@ public class CustomerService {
     @Autowired
     private CustomerRepository customerRepository;
     @Autowired
-    private MailService mailService;
+    private CustomerNotificationService customerNotificationService;
 
     public List<Customer> getAll() {
         return customerRepository.findAll();
@@ -34,6 +34,6 @@ public class CustomerService {
         Customer customer = get(customerId);
         customer.increaseCredit(extra);
         this.customerRepository.save(customer);
-        this.mailService.send(customer, extra);
+        this.customerNotificationService.send(customer, extra);
     }
 }
