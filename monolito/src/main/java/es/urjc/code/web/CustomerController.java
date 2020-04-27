@@ -47,14 +47,13 @@ public class CustomerController {
     
     @PostMapping("/")
 	public ResponseEntity<CustomerDto> newCustomer(@RequestBody CustomerDto customerDto) {
-        Customer customer = new Customer(customerDto.getName(), new Money(customerDto.getCredit()));
-        this.customerService.add(customer);
+        Customer customer = this.customerService.add(customerDto.getName(), new Money(customerDto.getCredit()));
         customerDto.setId(customer.getId());
 		return new ResponseEntity<>(customerDto, HttpStatus.CREATED);
     }
 
     @PostMapping("/{customerId}/credit")
-	public ResponseEntity<CustomerDto> increaseCredir(@PathVariable Long customerId, @RequestBody IncreaseCreditDto increaseDto) {
+	public ResponseEntity<CustomerDto> increaseCredit(@PathVariable Long customerId, @RequestBody IncreaseCreditDto increaseDto) {
         this.customerService.increaseCredit(customerId, new Money(increaseDto.getIncreaseCredit()));
 		return getCustomer(customerId);
     }

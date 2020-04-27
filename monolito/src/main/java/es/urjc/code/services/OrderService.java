@@ -1,10 +1,12 @@
 package es.urjc.code.services;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import es.urjc.code.domain.Money;
 import es.urjc.code.domain.customers.Customer;
 import es.urjc.code.domain.orders.Order;
 import es.urjc.code.domain.orders.OrderNotFoundException;
@@ -21,13 +23,13 @@ public class OrderService {
     @Autowired
     private ProductService productService;
 
-    public Long createOrder(Long customerId, Long productId, int quanty) {
+    public Long createOrder(Long customerId, Long productId, int quanty, BigDecimal orderTotal) {
         Product product = productService.get(customerId);
         product.reserveStock(quanty);
         Customer customer = customerService.get(productId);
-        customer.reserveCredit(product.calculatePrice(quanty));
+        customer.reserveCredit(new Money(orderTotal));
         //Ha ido todo bien
-        Order order = new Order(customer, product, quanty);
+        Order order = new Order(customer, product, quanty, new Money(orderTotal));
         this.orderRepository.save(order);
         return order.getId();
     }

@@ -51,7 +51,7 @@ public class OrderController {
     @PostMapping("/")
     public ResponseEntity<CreateOrderResponseDto> newOrder(@RequestBody CreateOrderRequestDto order) {
         try {
-            Long orderId = this.orderService.createOrder(order.getCustomerId(), order.getProductId(), order.getQuanty());
+            Long orderId = this.orderService.createOrder(order.getCustomerId(), order.getProductId(), order.getQuanty(), order.getOrderTotal());
             return new ResponseEntity<>(new CreateOrderResponseDto(orderId), HttpStatus.CREATED);
         } catch (CustomerNotFoundException ex) {
             return new ResponseEntity<>(new CreateOrderResponseDto("Customer not found"), HttpStatus.NOT_FOUND);

@@ -41,7 +41,7 @@ public class OrderApiTest {
 
         Response response = given().
             contentType("application/json").
-            body("{\"productId\":1, \"customerId\":1, \"quanty\":1}").
+            body("{\"productId\":1, \"customerId\":1, \"quanty\":1, \"orderTotal\": 5}").
         when().
             post("/api/orders/")
         .andReturn();

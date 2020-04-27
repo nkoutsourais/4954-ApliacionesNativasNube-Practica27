@@ -1,22 +1,18 @@
 package es.urjc.code.web.dtos;
 
-import java.math.BigDecimal;
-
 public class ProductDto {
 
     private Long id;
     private String name;
     private int stock;
-    private BigDecimal price;
 
     public ProductDto() {
     }
 
-    public ProductDto(Long id, String name, int stock, BigDecimal price) {
+    public ProductDto(Long id, String name, int stock) {
         this.id = id;
         this.name = name;
         this.stock = stock;
-        this.price = price;
     }
 
     public Long getId() {
@@ -41,13 +37,5 @@ public class ProductDto {
 
     public void setStock(int stock) {
         this.stock = stock;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
     }
 }

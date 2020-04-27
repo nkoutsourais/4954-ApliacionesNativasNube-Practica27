@@ -23,7 +23,9 @@ public class ProductService {
         return productRepository.findById(productId).orElseThrow(ProductNotFoundException::new);
     }
 
-    public void add(Product product) {
+    public Product add(String name, int stock) {
+        Product product = new Product(name, stock);
         this.productRepository.save(product);
+        return product;
     }
 }

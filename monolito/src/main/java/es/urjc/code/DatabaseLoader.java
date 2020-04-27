@@ -26,9 +26,9 @@ public class DatabaseLoader implements CommandLineRunner {
         Customer customer2 = new Customer("Patricia", new Money(30));
         this.customerRepository.save(customer1);
         this.customerRepository.save(customer2);
-        Product product1 = new Product("Movil", 10, new Money(4));
-        Product product2 = new Product("Tele", 1, new Money(20));
-        Product product3 = new Product("Radio", 50, new Money(2));
+        Product product1 = new Product("Movil", 10);
+        Product product2 = new Product("Tele", 1);
+        Product product3 = new Product("Radio", 50);
         this.productRepository.save(product1);
         this.productRepository.save(product2);
         this.productRepository.save(product3);

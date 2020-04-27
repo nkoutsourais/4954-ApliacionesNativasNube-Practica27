@@ -1,12 +1,15 @@
 package es.urjc.code.domain.products;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
-import es.urjc.code.domain.Money;
 import es.urjc.code.domain.orders.Order;
 
 @Entity
@@ -18,18 +21,16 @@ public class Product {
     private Long id;
     private String name;
     private int stock;
-    @Embedded
-    private Money price;
+
     @OneToMany(mappedBy = "product")
     private List<Order> orders = new ArrayList<>();
 
     public Product() {
     }
 
-    public Product(String name, int stock, Money price) {
+    public Product(String name, int stock) {
         this.name = name;
         this.stock = stock;
-        this.price = price;
     }
 
     public void reserveStock(int orderQuantity) {
@@ -37,11 +38,6 @@ public class Product {
             stock -= orderQuantity;
         else
             throw new ProductStockLimitExceededException();
-    }
-
-    public Money calculatePrice(int quanty) {
-        BigDecimal price = this.price.getAmount();
-        return new Money(price.multiply(new BigDecimal(quanty)));
     }
 
     public Long getId() {
@@ -58,9 +54,5 @@ public class Product {
 
     public int getStock() {
         return stock;
-    }
-
-    public Money getPrice() {
-        return price;
     }
 }

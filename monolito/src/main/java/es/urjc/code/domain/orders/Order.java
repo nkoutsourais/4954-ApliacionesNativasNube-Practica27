@@ -19,14 +19,17 @@ public class Order {
   @ManyToOne
   private Product product;
   private int quanty;
+  @Embedded
+  private Money orderTotal;
 
   public Order() {
   }
 
-  public Order(Customer customer, Product product, int quanty) {
+  public Order(Customer customer, Product product, int quanty, Money orderTotal) {
     this.quanty = quanty;
     this.product = product;
     this.customer = customer;
+    this.orderTotal = orderTotal;
   }
 
   public Long getId() {
@@ -50,6 +53,6 @@ public class Order {
   }
 
   public Money getOrderTotal() {
-    return product.calculatePrice(quanty);
+    return this.orderTotal;
   }
 }
