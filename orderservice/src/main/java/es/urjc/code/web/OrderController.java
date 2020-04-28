@@ -25,14 +25,14 @@ public class OrderController {
     OrderService orderService;
 
     @GetMapping("/")
-    public List<GetOrderDto> getAll() {
+    public List<OrderDto> getAll() {
         return orderService.getAll().stream()
                 .map(order -> mapper(order))
                 .collect(Collectors.toList());
     }
 
     @GetMapping("/{orderId}")
-    public ResponseEntity<GetOrderDto> getOrder(@PathVariable Long orderId) {
+    public ResponseEntity<OrderDto> getOrder(@PathVariable Long orderId) {
         try {
             Order order = this.orderService.get(orderId);
             return new ResponseEntity<>(mapper(order), HttpStatus.OK);
@@ -42,22 +42,19 @@ public class OrderController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<CreateOrderResponseDto> newOrder(@RequestBody CreateOrderRequestDto order) {
+    public ResponseEntity<OrderDto> newOrder(@RequestBody OrderDto orderDto) {
         try {
-            Long orderId = this.orderService.createOrder(order.getCustomerId(), order.getProductId(), order.getQuanty(), order.getOrderTotal());
-            return new ResponseEntity<>(new CreateOrderResponseDto(orderId), HttpStatus.CREATED);
-        } catch (CustomerNotFoundException ex) {
-            return new ResponseEntity<>(new CreateOrderResponseDto("Customer not found"), HttpStatus.NOT_FOUND);
-        } catch (ProductNotFoundException ex) {
-            return new ResponseEntity<>(new CreateOrderResponseDto("Product not found"), HttpStatus.NOT_FOUND);
-        } catch (CustomerCreditLimitExceededException ex) {
-            return new ResponseEntity<>(new CreateOrderResponseDto("Customer haven't credit"), HttpStatus.FORBIDDEN);
-        } catch (ProductStockLimitExceededException ex) {
-            return new ResponseEntity<>(new CreateOrderResponseDto("Product haven't stock"), HttpStatus.FORBIDDEN);
+            Order order = this.orderService.createOrder(orderDto.getCustomerId(), orderDto.getProductId(), orderDto.getQuanty(), orderDto.getOrderTotal());
+            orderDto.setOrderId(order.getId());
+            return new ResponseEntity<>(orderDto, HttpStatus.CREATED);
+        } catch (CustomerNotFoundException | ProductNotFoundException ex) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (CustomerCreditLimitExceededException | ProductStockLimitExceededException ex) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }
     
-    private GetOrderDto mapper(Order order) {
-        return new GetOrderDto(order.getId(),  order.getCustomerId(), order.getProductId(), order.getQuanty(), order.getOrderTotal().getAmount());
+    private OrderDto mapper(Order order) {
+        return new OrderDto(order.getId(),  order.getCustomerId(), order.getProductId(), order.getQuanty(), order.getOrderTotal().getAmount());
     }
 }

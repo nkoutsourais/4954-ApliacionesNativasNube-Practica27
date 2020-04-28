@@ -2,7 +2,7 @@ package es.urjc.code.web.dtos;
 
 import java.math.BigDecimal;
 
-public class GetOrderDto {
+public class OrderDto {
 
     private Long orderId;
     private Long customerId;
@@ -10,10 +10,10 @@ public class GetOrderDto {
     private int quanty;
     private BigDecimal orderTotal;
 
-    public GetOrderDto() {
+    public OrderDto() {
     }
 
-    public GetOrderDto(Long orderId, Long customerId, Long productId, int quanty, BigDecimal orderTotal) {
+    public OrderDto(Long orderId, Long customerId, Long productId, int quanty, BigDecimal orderTotal) {
         this.orderId = orderId;
         this.customerId = customerId;
         this.productId = productId;

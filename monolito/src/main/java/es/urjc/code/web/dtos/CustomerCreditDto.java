@@ -2,7 +2,7 @@ package es.urjc.code.web.dtos;
 
 import java.math.BigDecimal;
 
-public class CreditDto {
+public class CustomerCreditDto {
 
     BigDecimal credit;
 

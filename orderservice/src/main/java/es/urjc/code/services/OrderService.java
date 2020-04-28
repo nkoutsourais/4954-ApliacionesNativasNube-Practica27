@@ -12,9 +12,8 @@ import es.urjc.code.domain.orders.Order;
 import es.urjc.code.domain.orders.OrderNotFoundException;
 import es.urjc.code.domain.orders.OrderRepository;
 import es.urjc.code.proxies.CreditDto;
-import es.urjc.code.proxies.CustomerService;
-import es.urjc.code.proxies.ProductService;
 import es.urjc.code.proxies.ReserveStock;
+import es.urjc.code.proxies.WebhookService;
 import feign.Response;
 
 @Service
@@ -23,23 +22,21 @@ public class OrderService {
     @Autowired
     private OrderRepository orderRepository;
     @Autowired
-    private CustomerService customerService;
-    @Autowired
-    private ProductService productService;
+    private WebhookService webhookService;
 
-    public Long createOrder(Long customerId, Long productId, int quanty, BigDecimal orderTotal) {
-        Response response = customerService.reserve(customerId, new CreditDto(orderTotal));
+    public Order createOrder(Long customerId, Long productId, int quanty, BigDecimal orderTotal) {
+        Response response = webhookService.reserve(customerId, new CreditDto(orderTotal));
         if(response.status() == HttpStatus.OK.value()) {
-            response = productService.reserve(productId, new ReserveStock(quanty));
+            response = webhookService.reserve(productId, new ReserveStock(quanty));
             if(response.status() == HttpStatus.OK.value()) {
                 //Ha ido todo bien
                 Order order = new Order(customerId, productId, quanty, new Money(orderTotal));
                 this.orderRepository.save(order);
-                return order.getId();
+                return order;
             } else if(response.status() == HttpStatus.NOT_FOUND.value()) {
                 throw new ProductNotFoundException();
             } else if(response.status() == HttpStatus.FORBIDDEN.value()) {
-                response = customerService.addcredit(customerId, new CreditDto(orderTotal));
+                response = webhookService.addcredit(customerId, new CreditDto(orderTotal));
                 throw new ProductStockLimitExceededException();
             }
         } else if(response.status() == HttpStatus.NOT_FOUND.value()) {

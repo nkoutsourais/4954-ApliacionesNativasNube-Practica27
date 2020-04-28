@@ -15,10 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import es.urjc.code.domain.products.Product;
 import es.urjc.code.domain.products.ProductNotFoundException;
-import es.urjc.code.domain.products.ProductStockLimitExceededException;
 import es.urjc.code.services.ProductService;
 import es.urjc.code.web.dtos.ProductDto;
-import es.urjc.code.web.dtos.ReserveStock;
 
 @RestController
 @RequestMapping("/api/products")
@@ -52,19 +50,6 @@ public class ProductController {
 		return new ResponseEntity<>(productDto, HttpStatus.CREATED);
     }
 
-    @PostMapping("/{productId}/reserve")
-	public ResponseEntity<ProductDto> reserveStock(@PathVariable Long productId, @RequestBody ReserveStock reserveStock) {
-        try
-        {
-            this.productService.reserveStock(productId, reserveStock.getQuanty());
-            return getProduct(productId);
-        } catch(ProductNotFoundException ex) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } catch(ProductStockLimitExceededException ex) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-    }
-    
     private ProductDto mapper(Product product) {
         return new ProductDto(product.getId(), product.getName(), product.getStock());
     }
