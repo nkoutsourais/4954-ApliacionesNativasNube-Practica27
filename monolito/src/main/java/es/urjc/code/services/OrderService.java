@@ -23,7 +23,7 @@ public class OrderService {
     @Autowired
     private ProductService productService;
 
-    public Long createOrder(Long customerId, Long productId, int quanty, BigDecimal orderTotal) {
+    public Order createOrder(Long customerId, Long productId, int quanty, BigDecimal orderTotal) {
         Product product = productService.get(customerId);
         product.reserveStock(quanty);
         Customer customer = customerService.get(productId);
@@ -31,7 +31,7 @@ public class OrderService {
         //Ha ido todo bien
         Order order = new Order(customer, product, quanty, new Money(orderTotal));
         this.orderRepository.save(order);
-        return order.getId();
+        return order;
     }
 
     public Order get(Long orderId) {

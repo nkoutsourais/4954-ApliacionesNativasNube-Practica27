@@ -18,7 +18,6 @@ import es.urjc.code.domain.customers.Customer;
 import es.urjc.code.domain.customers.CustomerNotFoundException;
 import es.urjc.code.services.CustomerService;
 import es.urjc.code.web.dtos.CustomerDto;
-import es.urjc.code.web.dtos.IncreaseCreditDto;
 
 @RestController
 @RequestMapping("/api/customers")
@@ -52,12 +51,6 @@ public class CustomerController {
 		return new ResponseEntity<>(customerDto, HttpStatus.CREATED);
     }
 
-    @PostMapping("/{customerId}/credit")
-	public ResponseEntity<CustomerDto> increaseCredit(@PathVariable Long customerId, @RequestBody IncreaseCreditDto increaseDto) {
-        this.customerService.increaseCredit(customerId, new Money(increaseDto.getIncreaseCredit()));
-		return getCustomer(customerId);
-    }
-    
     private CustomerDto mapper(Customer customer) {
         return new CustomerDto(customer.getId(), customer.getName(), customer.getCreditLimit().getAmount());
     }
