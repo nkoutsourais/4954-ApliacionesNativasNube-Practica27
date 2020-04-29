@@ -1,7 +1,15 @@
 version: '3'
 services:
+  notificationservice:
+    build: ./notificationservice
+
   monolito:
-      build: ./monolito
+    build: ./monolito
+    depends_on: 
+      - notificationservice
+    environment:
+      - feature.toggle.notification.proxy=true
+      - notification.server=http://notificationservice:8080/
 
   orderservice:
     build: ./orderservice

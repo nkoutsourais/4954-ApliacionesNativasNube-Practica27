@@ -8,3 +8,4 @@ function exec(serviceName, command, cwd) {
 exec('api-gateway', 'gradlew assemble', './api-gateway');
 exec('monolito', 'mvn install', './monolito');
 exec('orderservice', 'mvn install', './orderservice');
+exec('notificationservice', 'mvn install', './notificationservice');
