@@ -1,4 +1,4 @@
-package es.urjc.code.services;
+package es.urjc.code.saga;
 
 public class CustomerNotFoundException extends RuntimeException {
     private static final long serialVersionUID = 1703986824040306978L;
