@@ -13,14 +13,14 @@ public class CustomerNotificationFeatureToggle implements CustomerNotification {
     private boolean proxy = false;
 
     @Autowired
-    CustomerNotificationProxyService customerNotificationProxyService;
+    CustomerNotificationProxy customerNotificationProxy;
     @Autowired
     CustomerNotificationService customerNotificationService;
 
     @Override
     public void send(Message message) {
         if(proxy)
-            customerNotificationProxyService.send(message);
+            customerNotificationProxy.send(message);
         else
             customerNotificationService.send(message);
     }
