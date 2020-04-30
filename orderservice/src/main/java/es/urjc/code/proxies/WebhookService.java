@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import feign.Response;
 
-@FeignClient(name = "webhooks", url = "${monolito.server}")
+@FeignClient(name = "webhooks", url = "${monolith.server}")
 public interface WebhookService {
 
     @RequestMapping(method = RequestMethod.POST, value = "api/webh/products/{productId}/reserve", consumes = "application/json")

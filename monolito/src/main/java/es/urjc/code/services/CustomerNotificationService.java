@@ -2,13 +2,12 @@ package es.urjc.code.services;
 
 import org.springframework.stereotype.Service;
 
-import es.urjc.code.domain.Money;
-import es.urjc.code.domain.customers.Customer;
+import es.urjc.code.domain.notifications.Message;
 
 @Service
 public class CustomerNotificationService {
 
-    public void send(Customer customer, Money newAmount) {
-        System.out.println("El cliente " + customer.getName() + " ha recibido un ingreso de " + newAmount);
+    public void send(Message message) {
+        System.out.println(message.getMessage());
     }
 }

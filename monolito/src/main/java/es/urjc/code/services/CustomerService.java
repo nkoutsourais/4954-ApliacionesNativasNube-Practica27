@@ -9,6 +9,7 @@ import es.urjc.code.domain.Money;
 import es.urjc.code.domain.customers.Customer;
 import es.urjc.code.domain.customers.CustomerNotFoundException;
 import es.urjc.code.domain.customers.CustomerRepository;
+import es.urjc.code.domain.notifications.Message;
 
 @Service
 public class CustomerService {
@@ -36,7 +37,8 @@ public class CustomerService {
         Customer customer = get(customerId);
         customer.increaseCredit(extra);
         this.customerRepository.save(customer);
-        this.customerNotificationService.send(customer, extra);
+        Message message = new Message("El cliente " + customer.getName() + " ha recibido un ingreso de " + extra.toString());
+        this.customerNotificationService.send(message);
     }
 
 	public void reserveCredit(Long customerId, Money reserve) {
