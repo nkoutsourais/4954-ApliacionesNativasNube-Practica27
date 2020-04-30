@@ -8,6 +8,7 @@
 En esta fase para ejecutar el proyecto basta con ejecutar MonolitoApplication.java.
 
 La creación del pedido se gestiona exclusivamente en OrderService.java, el pedido si no cumple que el cliente tenga credito y el producto tenga stock no se crea.
+La tabla Orders tiene foreing keys a las tablas customers y products, por lo que al guardar el pedido se ven actualizados tanto el cliente como el producto en base de datos.
 
 ``` java
 public Order createOrder(Long customerId, Long productId, int quanty, BigDecimal orderTotal) {
