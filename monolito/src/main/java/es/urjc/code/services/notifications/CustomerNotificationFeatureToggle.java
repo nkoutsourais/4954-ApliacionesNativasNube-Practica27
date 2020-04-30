@@ -21,6 +21,7 @@ public class CustomerNotificationFeatureToggle implements CustomerNotification {
     public void send(Message message) {
         if(proxy)
             customerNotificationProxyService.send(message);
-        customerNotificationService.send(message);
+        else
+            customerNotificationService.send(message);
     }
 }
