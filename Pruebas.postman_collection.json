@@ -84,53 +84,7 @@
 			"response": []
 		},
 		{
-			"name": "Increase Credit",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "328432f2-c826-40c1-90d0-9bfc49915e7b",
-						"exec": [
-							"pm.test(\"Status code is 200 - OK\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"credit\": 5\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:8080/api/webh/customers/1/credit",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"webh",
-						"customers",
-						"1",
-						"credit"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Create Order",
+			"name": "Create Order Status 200",
 			"event": [
 				{
 					"listen": "test",
@@ -154,6 +108,94 @@
 				"body": {
 					"mode": "raw",
 					"raw": "{\r\n    \"productId\": 1,\r\n    \"customerId\": 1,\r\n    \"quanty\": 1,\r\n    \"orderTotal\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/orders/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"orders",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Order Status 403 Cliente",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "cda2d0d3-55b6-4d45-9cd2-da64270f8f93",
+						"exec": [
+							"pm.test(\"Status code is 403 - Forbidden\", function () {\r",
+							"    pm.response.to.have.status(403);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"productId\": 1,\r\n    \"customerId\": 1,\r\n    \"quanty\": 1,\r\n    \"orderTotal\": 100\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/orders/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"orders",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Order Status 403 Producto",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0b592158-ff60-4922-a113-38be139892e7",
+						"exec": [
+							"pm.test(\"Status code is 403 - Forbidden\", function () {\r",
+							"    pm.response.to.have.status(403);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"productId\": 1,\r\n    \"customerId\": 1,\r\n    \"quanty\": 100,\r\n    \"orderTotal\": 1\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -210,6 +252,52 @@
 						"api",
 						"orders",
 						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Increase Credit",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "328432f2-c826-40c1-90d0-9bfc49915e7b",
+						"exec": [
+							"pm.test(\"Status code is 200 - OK\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"credit\": 5\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/webh/customers/1/credit",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"webh",
+						"customers",
+						"1",
+						"credit"
 					]
 				}
 			},
