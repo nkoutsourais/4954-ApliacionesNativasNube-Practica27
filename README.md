@@ -79,7 +79,7 @@ public Order execute(Long customerId, Long productId, int quanty, BigDecimal ord
     throw new RuntimeException("Error no controlado");
 }
 ```
-Para las llamadas de reserva de credito y stock como la compensación de credito se ha creado unos proxie con **Feign** encargado de hacer las llamadas al WebhookController del monolito.
+Para las llamadas de reserva de credito y stock como la compensación de credito se ha creado un proxie con **Feign** encargado de hacer las llamadas al WebhookController del monolito.
 
 WebhookService.java
 
