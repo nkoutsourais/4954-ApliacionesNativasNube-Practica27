@@ -1,8 +1,10 @@
 package es.urjc.code.services.notifications;
 
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
+import es.urjc.code.domain.notifications.Message;
+
+@Component
 public class CustomerNotificationService implements CustomerNotification {
 
     @Override

@@ -1,4 +1,4 @@
-package es.urjc.code.services.notifications;
+package es.urjc.code.domain.notifications;
 
 public class Message {
 

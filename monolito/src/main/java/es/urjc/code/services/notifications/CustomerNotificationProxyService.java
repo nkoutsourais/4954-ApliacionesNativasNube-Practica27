@@ -1,9 +1,11 @@
 package es.urjc.code.services.notifications;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
+import es.urjc.code.domain.notifications.Message;
+
+@Component
 public class CustomerNotificationProxyService implements CustomerNotification {
 
     @Autowired

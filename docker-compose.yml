@@ -3,7 +3,7 @@ services:
   notificationservice:
     build: ./notificationservice
 
-  monolito:
+  monolith:
     build: ./monolito
     depends_on: 
       - notificationservice
@@ -14,17 +14,17 @@ services:
   orderservice:
     build: ./orderservice
     environment:
-      - monolito.server=http://monolito:8080/
+      - monolith.server=http://monolith:8080/
 
   apigateway:
     build: ./api-gateway
     depends_on: 
-      - monolito
+      - monolith
       - orderservice
     ports:
       - "8080:8080"
     environment:
       - order.destinations.orderServiceUrl=http://orderservice:8080/
-      - webhook.destinations.webhookServiceUrl=http://monolito:8080/
-      - customer.destinations.customerServiceUrl=http://monolito:8080/
-      - product.destinations.productServiceUrl=http://monolito:8080/
+      - webhook.destinations.webhookServiceUrl=http://monolith:8080/
+      - customer.destinations.customerServiceUrl=http://monolith:8080/
+      - product.destinations.productServiceUrl=http://monolith:8080/

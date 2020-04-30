@@ -4,6 +4,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import es.urjc.code.domain.notifications.Message;
 import feign.Response;
 
 @FeignClient(name = "notifications", url = "${notification.server}")
